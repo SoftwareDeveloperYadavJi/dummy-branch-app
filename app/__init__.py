@@ -4,7 +4,11 @@ from .config import Config
 
 def create_app() -> Flask:
     app = Flask(__name__)
-    app.config.from_object(Config())
+    config = Config()
+    app.config.from_object(config)
+    
+    # Setup logging based on configuration
+    config.setup_logging(app)
 
     # Lazy imports to avoid circular deps during app init
     from .routes.health import bp as health_bp
